@@ -27,3 +27,5 @@ class Paciente{
         this._leito = value;
     }
 }
+
+export default Paciente;
