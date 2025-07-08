@@ -1,18 +1,19 @@
 import { PrismaClient } from '@prisma/client';
+import Paciente from '../../model/paciente/Paciente.js';
 const prisma = new PrismaClient();
 
 class PacienteRepository{
 
-    static async create(paciente){
-        await prisma.paciente.create({
+    static async create(p){
+        const paciente = await prisma.paciente.create({
             data:{
-                nome : paciente.Nome,
-                cpf : paciente.Cpf,
-                leito : paciente.Leito
+                nome : p.Nome,
+                cpf : p.Cpf,
+                leito : p.Leito
             }
         });
         
-        
+        return new Paciente(paciente.nome, paciente.cpf, paciente.leito);
     }
 
     static async getAll(){
@@ -33,7 +34,7 @@ class PacienteRepository{
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
 
-        return paciente;
+        return new Paciente(paciente.nome, paciente.cpf, paciente.leito);
     }
 
     static async update(id, data){
@@ -45,12 +46,12 @@ class PacienteRepository{
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
 
-        const pacienteUpdated = prisma.paciente.update({
+        const pacienteUpdated = await prisma.paciente.update({
             where: { id },
             data
         });
 
-        return pacienteUpdated;
+        return new Paciente(pacienteUpdated.nome, pacienteUpdated.cpf, pacienteUpdated.leito);
     }
 
     static async deleteById(id){
@@ -59,3 +60,5 @@ class PacienteRepository{
         });
     }
 }
+
+export default PacienteRepository;
