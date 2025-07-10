@@ -16,8 +16,12 @@ class VisitanteRepository{
         return new Visitante(visitante.id, visitante.nome, visitante.cpf, visitante.pacienteId, visitante.categoria);
     }
 
-    static async getAll(){
-        return await prisma.visitiante.findMany();
+    static async getAllByPacienteId(id){
+        return await prisma.visitiante.findMany({
+            where: {
+                pacienteId : id
+            }
+        });
     }
 
     static async getById(id){
@@ -47,3 +51,5 @@ class VisitanteRepository{
         });
     }
 }
+
+export default VisitanteRepository;

@@ -27,14 +27,17 @@ class PacienteRepository{
 
     static async getById(id){
         const paciente = await prisma.paciente.findUnique({
-            where : { id }
+            where : { id },
+            include: {
+                visitantes : true
+            }
         });
 
         if(!paciente){
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
 
-        return new Paciente(paciente.nome, paciente.cpf, paciente.leito);
+        return new Paciente(paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes);
     }
 
     static async update(id, data){

@@ -1,11 +1,11 @@
 
 class Paciente{
-    constructor(id, nome, cpf, leito){
+    constructor(id, nome, cpf, leito, visitantes = []){
         this._id = id;
         this._nome = nome;
         this._cpf = cpf;
         this._leito = leito;
-        this._visitantes = [];
+        this._visitantes = visitantes;
     }
 
     get Id(){
@@ -26,6 +26,10 @@ class Paciente{
 
     get Leito(){
         return this._leito;
+    }
+
+    get Visitantes(){
+        return this._visitantes;
     }
 
     set Leito(value){
