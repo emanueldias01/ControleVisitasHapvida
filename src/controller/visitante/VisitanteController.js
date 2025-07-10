@@ -38,7 +38,7 @@ class VisitanteController{
             cpf : body.cpf
         }
         const id = parseInt(req.params.id);
-        if(isNaN(id)) return res.status(400).json({mensagem : "ID inválido"})
+        if(isNaN(id)) return res.status(400).json({mensagem : "ID inválido"});
 
         try{
             const visitante = await VisitanteService.updateVisitante(id, data);
@@ -60,8 +60,24 @@ class VisitanteController{
 
             return res.status(500).json(
                 { mensagem : erro.message }
-            )
+            );
         }
 
     }
+
+    static async deletePacienteById(req, res){
+        const id = parseInt(req.params.id);
+        if(isNaN(id)) return res.status(400).json({mensagem : "ID inválido"});
+
+        try{
+            await VisitanteService.deleteVisitanteById(id);
+            return res.status(204).send();
+        }catch(erro){
+            return res.status(500).json({
+                mensagem : erro.message
+            });
+        }
+    }
 }
+
+export default VisitanteController;
