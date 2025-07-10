@@ -31,7 +31,7 @@ class VisitanteRepository{
             where : { id }
         })
 
-        if(!paciente) throw new Error(`Visitante com ID ${id} não encontrado`)
+        if(!visitante) throw new Error(`Visitante com ID ${id} não encontrado`)
         
         const visitanteUpdate = await prisma.visitiante.update({
             where : { id },
