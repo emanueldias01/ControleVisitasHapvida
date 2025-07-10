@@ -12,6 +12,10 @@ class PacienteService{
         return await PacienteRepository.getAll();
     }
 
+    static async getPacienteById(id){
+        return await PacienteRepository.getById(id);
+    }
+
     static async updatePaciente(id, data){
         const paciente = new Paciente(data.nome, data.cpf, data.leito);
         return await PacienteRepository.update(id, paciente);
@@ -21,3 +25,5 @@ class PacienteService{
         await PacienteRepository.deleteById(id);
     }
 }
+
+export default PacienteService;
