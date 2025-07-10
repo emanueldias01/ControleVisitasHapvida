@@ -1,10 +1,15 @@
 
 class Paciente{
-    constructor(nome, cpf, leito){
+    constructor(id, nome, cpf, leito){
+        this._id = id;
         this._nome = nome;
         this._cpf = cpf;
         this._leito = leito;
         this._visitantes = [];
+    }
+
+    get Id(){
+        return this._id;
     }
 
     get Nome(){

@@ -18,10 +18,10 @@ model Paciente {
   nome       String
   cpf        String
   leito      Int
-  visitantes Vistiante[]  // Um paciente tem vários visitantes
+  visitantes Visitiante[]  // Um paciente tem vários visitantes
 }
 
-model Vistiante {
+model Visitiante {
   id         Int       @id @default(autoincrement())
   nome       String
   cpf        String

@@ -19,7 +19,7 @@ class PacienteRepository{
     static async getAll(){
         return await prisma.paciente.findMany({
                 include: {
-                    visitantes: true
+                    visitantes: false
                 }
             }
         );
