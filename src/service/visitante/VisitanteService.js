@@ -36,3 +36,5 @@ class VisitanteService{
         return await VisitanteRepository.createVisitante(data);
     }
 }
+
+export default VisitanteService;
