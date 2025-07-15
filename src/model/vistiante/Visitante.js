@@ -4,12 +4,13 @@ class Visitante{
         a : "ACOMPANHANTE",
         v : "VISITANTE" 
     }
-    constructor(id, nome, cpf, pacienteId, categoria){
-        this._id = id;
-        this._nome = nome;
-        this._cpf = cpf;
-        this._pacienteId = pacienteId;
-        this._categoria = categoria;
+    constructor(id, nome, cpf, pacienteId, categoria, dataEntrada = new Date()){
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.pacienteId = pacienteId;
+        this.categoria = categoria;
+        this.dataEntrada = dataEntrada;
     }
 
 }

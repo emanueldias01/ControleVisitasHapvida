@@ -9,11 +9,12 @@ class PacienteRepository{
             data:{
                 nome : p.nome,
                 cpf : p.cpf,
-                leito : p.leito
+                leito : p.leito,
+                dataEntrada : new Date()
             }
         });
         
-        return new Paciente(paciente.nome, paciente.cpf, paciente.leito);
+        return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, [], paciente.dataEntrada);
     }
 
     static async getAll(){
@@ -37,7 +38,14 @@ class PacienteRepository{
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
 
-        return new Paciente(paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes);
+        const dataEntradaBR = paciente.dataEntrada.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes, dataEntradaBR);
     }
 
     static async update(id, data){
@@ -54,7 +62,7 @@ class PacienteRepository{
             data
         });
 
-        return new Paciente(pacienteUpdated.nome, pacienteUpdated.cpf, pacienteUpdated.leito);
+        return new Paciente(pacienteUpdated.id, pacienteUpdated.nome, pacienteUpdated.cpf, pacienteUpdated.leito);
     }
 
     static async deleteById(id){

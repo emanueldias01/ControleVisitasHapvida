@@ -18,15 +18,17 @@ model Paciente {
   nome       String      @unique
   cpf        String      @unique
   leito      Int         @unique
-  visitantes Visitiante[]  // Um paciente tem vários visitantes
+  dataEntrada DateTime
+  visitantes Visitante[]  // Um paciente tem vários visitantes
 }
 
-model Visitiante {
+model Visitante {
   id         Int       @id @default(autoincrement())
   nome       String
   cpf        String    @unique
   categoria  String
   pacienteId Int
+  dataEntrada DateTime
   paciente   Paciente  @relation(fields: [pacienteId], references: [id])
 }
 

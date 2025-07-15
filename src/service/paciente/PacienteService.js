@@ -1,5 +1,4 @@
 import PacienteRequest from "../../dto/paciente/PacienteRequestDTO.js";
-import Paciente from "../../model/paciente/Paciente.js";
 import PacienteRepository from "../../repository/paciente/PacienteRepository.js";
 
 class PacienteService{

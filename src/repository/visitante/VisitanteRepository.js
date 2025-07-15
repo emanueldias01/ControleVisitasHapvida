@@ -4,12 +4,13 @@ const prisma = new PrismaClient();
 
 class VisitanteRepository{
     static async create(v){
-        const visitante = await prisma.visitiante.create({
+        const visitante = await prisma.visitante.create({
             data:{
                 nome: v.nome,
                 cpf: v.cpf,
                 pacienteId: v.pacienteId,
-                categoria: Visitante.categoria[v.categoria]
+                categoria: Visitante.categoria[v.categoria],
+                dataEntrada: new Date()
             }
         });
         
@@ -17,7 +18,7 @@ class VisitanteRepository{
     }
 
     static async getAllByPacienteId(id){
-        return await prisma.visitiante.findMany({
+        return await prisma.visitante.findMany({
             where: {
                 pacienteId : id
             }
@@ -25,9 +26,18 @@ class VisitanteRepository{
     }
 
     static async getById(id){
-        return await prisma.visitiante.findUnique({
+        const visitante = await prisma.visitante.findUnique({
             where: { id }
         });
+
+         const dataEntradaBR = paciente.dataEntrada.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        return new Visitante(visitante.id, visitante.nome, visitante.cpf, visitante.pacienteId, visitante.categoria, dataEntradaBR);
     }
 
     static async udpate(id, data){
@@ -37,7 +47,7 @@ class VisitanteRepository{
 
         if(!visitante) throw new Error(`Visitante com ID ${id} não encontrado`)
         
-        const visitanteUpdate = await prisma.visitiante.update({
+        const visitanteUpdate = await prisma.visitante.update({
             where : { id },
             data
         });
@@ -46,7 +56,7 @@ class VisitanteRepository{
     }
     
     static async deleteById(id){
-        await prisma.visitiante.delete({
+        await prisma.visitante.delete({
             where : { id }
         });
     }
