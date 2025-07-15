@@ -5,6 +5,6 @@ import routes from "./src/router/Routes.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(routes);
+routes(app);
 
-app.listen(3000);
+app.listen(8080);

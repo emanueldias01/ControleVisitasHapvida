@@ -15,16 +15,16 @@ generator client {
 
 model Paciente {
   id         Int         @id @default(autoincrement())
-  nome       String
-  cpf        String
-  leito      Int
+  nome       String      @unique
+  cpf        String      @unique
+  leito      Int         @unique
   visitantes Visitiante[]  // Um paciente tem vários visitantes
 }
 
 model Visitiante {
   id         Int       @id @default(autoincrement())
   nome       String
-  cpf        String
+  cpf        String    @unique
   categoria  String
   pacienteId Int
   paciente   Paciente  @relation(fields: [pacienteId], references: [id])

@@ -1,10 +1,11 @@
+import PacienteRequest from "../../dto/paciente/PacienteRequestDTO.js";
 import Paciente from "../../model/paciente/Paciente.js";
 import PacienteRepository from "../../repository/paciente/PacienteRepository.js";
 
 class PacienteService{
 
     static async createPaciente(paciente){
-        const pacienteEntity = new Paciente(paciente.nome, paciente.cpf, paciente.leito);
+        const pacienteEntity = new PacienteRequest(paciente.nome, paciente.cpf, parseInt(paciente.leito));
         return await PacienteRepository.create(pacienteEntity);
     }
 
@@ -17,7 +18,7 @@ class PacienteService{
     }
 
     static async updatePaciente(id, data){
-        const paciente = new Paciente(data.nome, data.cpf, data.leito);
+        const paciente = new PacienteRequest(data.nome, data.cpf, data.leito);
         return await PacienteRepository.update(id, paciente);
     }
 

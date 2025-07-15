@@ -7,9 +7,9 @@ class PacienteRepository{
     static async create(p){
         const paciente = await prisma.paciente.create({
             data:{
-                nome : p.Nome,
-                cpf : p.Cpf,
-                leito : p.Leito
+                nome : p.nome,
+                cpf : p.cpf,
+                leito : p.leito
             }
         });
         
