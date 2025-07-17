@@ -9,7 +9,7 @@ class VisitanteRepository{
                 nome: v.nome,
                 cpf: v.cpf,
                 pacienteId: v.pacienteId,
-                categoria: Visitante.categoria[v.categoria],
+                categoria: v.categoria,
                 dataEntrada: new Date()
             }
         });
@@ -18,7 +18,7 @@ class VisitanteRepository{
     }
 
     static async getAllByPacienteId(id){
-        return await prisma.visitante.findMany({
+        const list = await prisma.visitante.findMany({
             where: {
                 pacienteId : id
             }

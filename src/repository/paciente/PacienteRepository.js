@@ -13,6 +13,8 @@ class PacienteRepository{
                 dataEntrada : new Date()
             }
         });
+
+        console.log(paciente);
         
         return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, [], paciente.dataEntrada);
     }
@@ -37,15 +39,8 @@ class PacienteRepository{
         if(!paciente){
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
-
-        const dataEntradaBR = paciente.dataEntrada.toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes, dataEntradaBR);
+        console.log(paciente);
+        return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes, paciente.dataEntrada);
     }
 
     static async update(id, data){

@@ -7,6 +7,6 @@ visitanteRoutes.get("/visitantes/byPaciente/:id", VisitanteController.getAllVisi
 visitanteRoutes.get("/visitantes/:id", VisitanteController.getVisitanteById);
 visitanteRoutes.post("/visitantes", VisitanteController.createVisitante);
 visitanteRoutes.put("/visitantes/:id", VisitanteController.updateVisitante);
-visitanteRoutes.delete("/visitantes/:id", VisitanteController.deletePacienteById);
+visitanteRoutes.delete("/visitantes/:id", VisitanteController.deleteVisitanteById);
 
 export default visitanteRoutes;

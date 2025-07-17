@@ -13,7 +13,30 @@ class PacienteService{
     }
 
     static async getPacienteById(id){
-        return await PacienteRepository.getById(id);
+        const paciente = await PacienteRepository.getById(id);
+        paciente.visitantes.map(v => {
+            const dataEntrada = new Date(v.dataEntrada);
+            const dataEntradaBR = dataEntrada.toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            v.dataEntrada = dataEntradaBR;
+        });
+
+        const dataEntrada = new Date(paciente.dataEntrada);
+        const dataEntradaBR = dataEntrada.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    
+        paciente.dataEntrada = dataEntradaBR;
+        return paciente;
     }
 
     static async updatePaciente(id, data){
