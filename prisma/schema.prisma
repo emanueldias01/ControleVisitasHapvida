@@ -29,6 +29,6 @@ model Visitante {
   categoria  String
   pacienteId Int
   dataEntrada DateTime
-  paciente   Paciente  @relation(fields: [pacienteId], references: [id])
+  paciente   Paciente  @relation(fields: [pacienteId], references: [id], onDelete: Cascade)
 }
 
