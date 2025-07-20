@@ -14,7 +14,6 @@ class PacienteRepository{
             }
         });
 
-        console.log(paciente);
         
         return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, [], paciente.dataEntrada);
     }
@@ -39,7 +38,6 @@ class PacienteRepository{
         if(!paciente){
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
-        console.log(paciente);
         return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes, paciente.dataEntrada);
     }
 
