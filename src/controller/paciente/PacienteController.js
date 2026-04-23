@@ -1,30 +1,29 @@
-import PacienteService from "../../service/paciente/PacienteService.js"
+class PacienteController {
+    constructor(pacienteService) {
+        this.pacienteService = pacienteService;
+    }
 
-class PacienteController{
-    
-    static async getAllPacientes(req, res){
+    async getAllPacientes(req, res){
         try{
-            const list = await PacienteService.getAllPacientes();
+            const list = await this.pacienteService.getAllPacientes();
             return res.status(200).json(list);
         }catch(erro){
             return res.status(500).json(
                 {mensagem : erro.message}
             );
         }
-        
     }
 
-    static async getPacienteById(req, res){
+    async getPacienteById(req, res){
         const id = parseInt(req.params.id);
         if(isNaN(id)) return res.status(404).json({mensagem : "ID inválido"});
 
         try{
-            const paciente = await PacienteService.getPacienteById(id);
+            const paciente = await this.pacienteService.getPacienteById(id);
             return res.status(200).json(paciente);
         }catch(erro){
-
             let code;
-            if(erro.message === `Paciente com ID ${id} não encontrado`){
+            if(erro.message.contains("Paciente com ID")){
                 code = 404
                 return res.status(code).json(
                     {mensagem : erro.message}
@@ -38,10 +37,10 @@ class PacienteController{
         }
     }
 
-    static async createPaciente(req, res){
+    async createPaciente(req, res){
         try{
             const body = req.body;
-            const paciente = await PacienteService.createPaciente(body);
+            const paciente = await this.pacienteService.createPaciente(body);
             
             return res.status(201).json(paciente);
         }catch(erro){
@@ -51,13 +50,13 @@ class PacienteController{
         }
     }
 
-    static async updatePaciente(req, res){
+    async updatePaciente(req, res){
         const id = parseInt(req.params.id);
         if(isNaN(id)) return res.status(404).json({mensagem : "ID inválido"});
 
         try{
             const body = req.body;
-            const paciente = await PacienteService.updatePaciente(id, body);
+            const paciente = await this.pacienteService.updatePaciente(id, body);
 
             return res.status(200).json(paciente);
         }catch(erro){
@@ -67,12 +66,12 @@ class PacienteController{
         }
     }
 
-    static async deletePacienteById(req, res){
+    async deletePacienteById(req, res){
         const id = parseInt(req.params.id);
         if(isNaN(id)) return res.status(404).json({mensagem : "ID inválido"});
 
         try{
-            await PacienteService.deletePacienteById(id);
+            await this.pacienteService.deletePacienteById(id);
 
             return res.status(204).send();
         }catch(erro){
@@ -81,7 +80,6 @@ class PacienteController{
             );
         }
     }
-
 }
 
 export default PacienteController;
