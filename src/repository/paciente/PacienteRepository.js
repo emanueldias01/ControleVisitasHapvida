@@ -1,11 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import Paciente from '../../model/paciente/Paciente.js';
-const prisma = new PrismaClient();
+import IPacienteRepository from '../interfaces/IPacienteRepository.js';
 
-class PacienteRepository{
+class PacienteRepository extends IPacienteRepository {
+    constructor(prismaClient = new PrismaClient()) {
+        super();
+        this.prisma = prismaClient;
+    }
 
-    static async create(p){
-        const paciente = await prisma.paciente.create({
+    async create(p){
+        const paciente = await this.prisma.paciente.create({
             data:{
                 nome : p.nome,
                 cpf : p.cpf,
@@ -14,12 +18,11 @@ class PacienteRepository{
             }
         });
 
-        
         return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, [], paciente.dataEntrada);
     }
 
-    static async getAll(){
-        return await prisma.paciente.findMany({
+    async getAll(){
+        return await this.prisma.paciente.findMany({
                 include: {
                     visitantes: false
                 }
@@ -27,8 +30,8 @@ class PacienteRepository{
         );
     }
 
-    static async getById(id){
-        const paciente = await prisma.paciente.findUnique({
+    async getById(id){
+        const paciente = await this.prisma.paciente.findUnique({
             where : { id },
             include: {
                 visitantes : true
@@ -41,8 +44,8 @@ class PacienteRepository{
         return new Paciente(paciente.id, paciente.nome, paciente.cpf, paciente.leito, paciente.visitantes, paciente.dataEntrada);
     }
 
-    static async update(id, data){
-        const paciente = prisma.paciente.findUnique({
+    async update(id, data){
+        const paciente = await this.prisma.paciente.findUnique({
             where: { id }
         });
 
@@ -50,7 +53,7 @@ class PacienteRepository{
             throw new Error(`Paciente com ID ${id} não encontrado`);
         }
 
-        const pacienteUpdated = await prisma.paciente.update({
+        const pacienteUpdated = await this.prisma.paciente.update({
             where: { id },
             data
         });
@@ -58,8 +61,8 @@ class PacienteRepository{
         return new Paciente(pacienteUpdated.id, pacienteUpdated.nome, pacienteUpdated.cpf, pacienteUpdated.leito);
     }
 
-    static async deleteById(id){
-        await prisma.paciente.delete({
+    async deleteById(id){
+        await this.prisma.paciente.delete({
             where : { id }
         });
     }

@@ -1,12 +1,13 @@
 import express from "express";
-import PacienteController from "../controller/paciente/PacienteController.js";
+import container from "../container/DIContainer.js";
 
 const pacienteRoutes = express.Router();
+const pacienteController = container.getPacienteController();
 
-pacienteRoutes.get("/pacientes", PacienteController.getAllPacientes);
-pacienteRoutes.get("/pacientes/:id", PacienteController.getPacienteById);
-pacienteRoutes.post("/pacientes", PacienteController.createPaciente);
-pacienteRoutes.put("/pacientes/:id", PacienteController.updatePaciente);
-pacienteRoutes.delete("/pacientes/:id", PacienteController.deletePacienteById);
+pacienteRoutes.get("/pacientes", (req, res) => pacienteController.getAllPacientes(req, res));
+pacienteRoutes.get("/pacientes/:id", (req, res) => pacienteController.getPacienteById(req, res));
+pacienteRoutes.post("/pacientes", (req, res) => pacienteController.createPaciente(req, res));
+pacienteRoutes.put("/pacientes/:id", (req, res) => pacienteController.updatePaciente(req, res));
+pacienteRoutes.delete("/pacientes/:id", (req, res) => pacienteController.deletePacienteById(req, res));
 
 export default pacienteRoutes;

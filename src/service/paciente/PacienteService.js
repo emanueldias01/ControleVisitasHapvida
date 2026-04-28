@@ -1,51 +1,39 @@
 import PacienteRequest from "../../dto/paciente/PacienteRequestDTO.js";
-import PacienteRepository from "../../repository/paciente/PacienteRepository.js";
+import DateFormatter from "../../utils/DateFormatter.js";
+import IPacienteService from "../interfaces/IPacienteService.js";
 
-class PacienteService{
+class PacienteService extends IPacienteService {
+    constructor(pacienteRepository) {
+        super();
+        this.pacienteRepository = pacienteRepository;
+    }
 
-    static async createPaciente(paciente){
+    async createPaciente(paciente){
         const pacienteEntity = new PacienteRequest(paciente.nome, paciente.cpf, parseInt(paciente.leito));
-        return await PacienteRepository.create(pacienteEntity);
+        return await this.pacienteRepository.create(pacienteEntity);
     }
 
-    static async getAllPacientes(){
-        return await PacienteRepository.getAll();
+    async getAllPacientes(){
+        return await this.pacienteRepository.getAll();
     }
 
-    static async getPacienteById(id){
-        const paciente = await PacienteRepository.getById(id);
+    async getPacienteById(id){
+        const paciente = await this.pacienteRepository.getById(id);
         paciente.visitantes.map(v => {
-            const dataEntrada = new Date(v.dataEntrada);
-            const dataEntradaBR = dataEntrada.toLocaleString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            v.dataEntrada = dataEntradaBR;
+            v.dataEntrada = DateFormatter.formatToBrazilian(v.dataEntrada);
         });
 
-        const dataEntrada = new Date(paciente.dataEntrada);
-        const dataEntradaBR = dataEntrada.toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    
-        paciente.dataEntrada = dataEntradaBR;
+        paciente.dataEntrada = DateFormatter.formatToBrazilian(paciente.dataEntrada);
         return paciente;
     }
 
-    static async updatePaciente(id, data){
+    async updatePaciente(id, data){
         const paciente = new PacienteRequest(data.nome, data.cpf, data.leito);
-        return await PacienteRepository.update(id, paciente);
+        return await this.pacienteRepository.update(id, paciente);
     }
 
-    static async deletePacienteById(id){
-        await PacienteRepository.deleteById(id);
+    async deletePacienteById(id){
+        await this.pacienteRepository.deleteById(id);
     }
 }
 
